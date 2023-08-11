@@ -39,7 +39,7 @@ def edit():
     print("edit")
     
 def delete():
-    print("edit")
+    pass
 
 def print_table(table, rows):
     columns = ["Name", "Email", "Phone Numbers"]
@@ -64,17 +64,8 @@ def show():
     print_table(table, rows)
 
     
-     
-    
-def search(): 
-  
-   table = Table(title="Search Result")
+def find(seacrh_by, value):
    rows=[]
-   seacrh_by=int(input(
-"To search by name enter 1 \n\
-To search by email enter 2\n\
-"))
-   value=input("Enter value: \n")
    if seacrh_by == 1:   
        for contact in all_contacts:
            if value in contact.name :
@@ -85,6 +76,20 @@ To search by email enter 2\n\
            if value in contact.email :
                
                rows.append(contact.return_list())
+               
+   return rows
+    
+def search(): 
+  
+   table = Table(title="Search Result")
+  
+   seacrh_by=int(input(
+"To search by name enter 1 \n\
+To search by email enter 2\n\
+"))
+   value=input("Enter value: \n")
+   rows=find(seacrh_by, value)
+
    
    print_table(table, rows)
         
