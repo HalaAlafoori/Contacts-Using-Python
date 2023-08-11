@@ -77,12 +77,12 @@ To search by email enter 2\n\
    value=input("Enter value: \n")
    if seacrh_by == 1:   
        for contact in all_contacts:
-           if contact.name == value:
+           if value in contact.name :
                
                rows.append(contact.return_list())
    else:      
        for contact in all_contacts:
-           if contact.email == value:
+           if value in contact.email :
                
                rows.append(contact.return_list())
    
