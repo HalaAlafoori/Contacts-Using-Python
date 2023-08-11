@@ -41,7 +41,8 @@ def edit():
 def delete():
     print("edit")
 
-def print_table(table, rows, columns):
+def print_table(table, rows):
+    columns = ["Name", "Email", "Phone Numbers"]
     for column in columns:
         table.add_column(column)
 
@@ -59,14 +60,36 @@ def show():
     rows =[]
     for contact in all_contacts:
         rows.append(contact.return_list())
-    columns = ["Name", "Email", "Phone Numbers"]
-    print_table(table, rows, columns)
+   
+    print_table(table, rows)
 
     
      
     
-def search():
-    print("search")
+def search(): 
+  
+   table = Table(title="Search Result")
+   rows=[]
+   seacrh_by=int(input(
+"To search by name enter 1 \n\
+To search by email enter 2\n\
+"))
+   value=input("Enter value: \n")
+   if seacrh_by == 1:   
+       for contact in all_contacts:
+           if contact.name == value:
+               
+               rows.append(contact.return_list())
+   else:      
+       for contact in all_contacts:
+           if contact.email == value:
+               
+               rows.append(contact.return_list())
+   
+   print_table(table, rows)
+        
+       
+    
     
 
 
