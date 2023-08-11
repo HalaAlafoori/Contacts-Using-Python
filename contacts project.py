@@ -1,9 +1,14 @@
+from rich.console import Console
+from rich.table import Table
+
 class Contact:
     def __init__(self, name, email, *phone_numbers):
         self.name = name
        
         self.email = email
         self.phone_numbers = phone_numbers #a list 
+    def return_list(self):
+        return [self.name, self.email, str(self.phone_numbers)]
 
 
 
@@ -32,7 +37,23 @@ def delete():
     print("edit")
     
 def show():
-    print("edit")
+    
+
+    table = Table(title="My Contacts")
+    rows =[]
+    for contact in all_contacts:
+        rows.append(contact.return_list())
+    columns = ["Name", "Email", "Phone Numbers"]
+
+    for column in columns:
+        table.add_column(column)
+
+    for row in rows:
+        table.add_row(*row, style='bright_green')
+
+    console = Console()
+    console.print(table)
+     
     
 def search():
     print("search")
