@@ -7,8 +7,13 @@ class Contact:
        
         self.email = email
         self.phone_numbers = phone_numbers #a list 
+        
     def return_list(self):
-        return [self.name, self.email, str(self.phone_numbers)]
+        print(self.phone_numbers)
+        phone_numbers_string=''
+        for phone in self.phone_numbers[0] :
+            phone_numbers_string= phone_numbers_string+f'{phone}\n'
+        return [self.name, self.email, phone_numbers_string]
 
 
 
@@ -35,6 +40,17 @@ def edit():
     
 def delete():
     print("edit")
+
+def print_table(table, rows, columns):
+    for column in columns:
+        table.add_column(column)
+
+    for row in rows:
+        table.add_row(*row, style='bright_green')
+
+    console = Console()
+    console.print(table)
+    
     
 def show():
     
@@ -44,15 +60,9 @@ def show():
     for contact in all_contacts:
         rows.append(contact.return_list())
     columns = ["Name", "Email", "Phone Numbers"]
+    print_table(table, rows, columns)
 
-    for column in columns:
-        table.add_column(column)
-
-    for row in rows:
-        table.add_row(*row, style='bright_green')
-
-    console = Console()
-    console.print(table)
+    
      
     
 def search():
