@@ -1,4 +1,4 @@
-from os import system
+
 from rich.console import Console
 from rich.table import Table
 
@@ -20,10 +20,12 @@ class Contact:
 #creating the list of objects 
 all_contacts=[] #empty at first
 
-
+def clear_screen():
+    print(chr(27) + "[2J")
 
 def add():
-     
+   
+    clear_screen()
     name=input("Enter name: \n")
     email=input("Enter email: \n")
     phone_numbers=[]
@@ -41,6 +43,7 @@ def add():
     print(all_contacts[0].name)
     
 def edit():
+   clear_screen()
    table = Table(title="Search Result")
    seacrh_by=int(input(
 "To search by name enter 1 \n\
@@ -95,6 +98,7 @@ To search by email enter 2\n\
  
 
 def print_table(table, rows):
+    clear_screen()
     columns = ["Name", "Email", "Phone Numbers"]
     for column in columns:
         table.add_column(column)
@@ -108,6 +112,7 @@ def print_table(table, rows):
     
     
 def show():
+    clear_screen()
     
 
     table = Table(title="My Contacts")
@@ -116,9 +121,11 @@ def show():
         rows.append(contact.return_list())
    
     print_table(table, rows)
+    input('press enter key to go back')
 
     
 def find(seacrh_by, value):
+   clear_screen()
    rows=[]
    if seacrh_by == 1:   
        for contact in all_contacts:
@@ -141,6 +148,7 @@ def foramt_rows(rows):
    return format_rows
         
 def search(): 
+   clear_screen()
   
    table = Table(title="Search Result")
   
@@ -153,12 +161,14 @@ To search by email enter 2\n\
    format_rows=foramt_rows(rows)
 
    print_table(table, format_rows)
+   input('press enter key to go back')
 
 def Diff(all_contacts, deleted_contacts):
     new_all_contacts = [contact for contact in all_contacts if contact not in deleted_contacts ]
     return  new_all_contacts
    
 def delete():
+   clear_screen()
    table = Table(title="Search Result")
   
    seacrh_by=int(input(
@@ -182,10 +192,11 @@ To delete by email enter 2\n\
    
 # main
 
-  
+
 run=True
 
 while run:
+    clear_screen()
    
     choice=input(
 "To add a new contact enter 1 \n\
