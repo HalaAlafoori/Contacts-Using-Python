@@ -7,10 +7,11 @@ class Contact:
         self.name = name
        
         self.email = email
-        self.phone_numbers = phone_numbers #a list 
+        self.phone_numbers = phone_numbers #a tuple 
+        #print(type(self.phone_numbers))
         
     def return_list(self):
-        print(self.phone_numbers)
+        #print(self.phone_numbers)
         phone_numbers_string=''
         for phone in self.phone_numbers[0] :
             phone_numbers_string= phone_numbers_string+f'{phone}\n'
@@ -40,20 +41,58 @@ def add():
     print(all_contacts[0].name)
     
 def edit():
-    print("edit")
- 
-  
-   
-  
+   table = Table(title="Search Result")
+   seacrh_by=int(input(
+"To search by name enter 1 \n\
+To search by email enter 2\n\
+"))
+   value=input("Enter value: \n")
+   rows=find(seacrh_by, value)
+   format_rows=foramt_rows(rows)
 
+   print_table(table, format_rows)
+   
+   while True:
+       edit_by=int(input(
+    "To edit name enter 1 \n\
+    To edit email enter 2 \n\
+    To edit phone numbers enter 3 \n" ))
+    
+      
+       if edit_by ==1:
+           value=input("Enter new name: ")
+           rows[0].name=value
+           
+           
+       elif edit_by ==2:
+           value=input("Enter new email: ")
+           rows[0].email=value
+          
+       else: #error
+           
+           # rows[0].phone_numbers.clear() #delete old number
+           new_numbers=[]
+           while True:
+                value=input("Enter new phone number: ")
+                
+                new_numbers.append(value)
+                #print(new_numbers)
+                answer=input("Is there another phone number? (Y/N) \n")
+                if answer == 'N' or answer=='n':
+                    break
+           rows[0].phone_numbers=tuple(new_numbers)
+           #sprint(rows[0].phone_numbers)
+                
+       answer=input("Do you want to edit another value?") 
+       if answer == 'N' or answer=='n':
+           break
+           
+       
+       
+   
    
  
-   
-     
-    
-         
-    
-
+ 
 
 def print_table(table, rows):
     columns = ["Name", "Email", "Phone Numbers"]
@@ -65,6 +104,7 @@ def print_table(table, rows):
 
     console = Console()
     console.print(table)
+    
     
     
 def show():
@@ -111,9 +151,7 @@ To search by email enter 2\n\
    value=input("Enter value: \n")
    rows=find(seacrh_by, value)
    format_rows=foramt_rows(rows)
-  
 
-   
    print_table(table, format_rows)
 
 def Diff(all_contacts, deleted_contacts):
