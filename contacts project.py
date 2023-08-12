@@ -1,4 +1,4 @@
-
+import json
 from rich.console import Console
 from rich.table import Table
 
@@ -11,17 +11,52 @@ class Contact:
         #print(type(self.phone_numbers))
         
     def return_list(self):
-        #print(self.phone_numbers)
+        
         phone_numbers_string=''
         for phone in self.phone_numbers[0] :
             phone_numbers_string= phone_numbers_string+f'{phone}\n'
         return [self.name, self.email, phone_numbers_string]
+    
+    def return_dict(self):
+      
+        return {'name': self.name, 'email': self.email, 'phone_numbers': self.phone_numbers}
+   
+   
+   
+   
+def return_objs(contact_dict):
+     
+     return  Contact(contact_dict['name'], contact_dict['email'], contact_dict['phone_numbers'])
+            
 
 #creating the list of objects 
 all_contacts=[] #empty at first
 
 def clear_screen():
     print(chr(27) + "[2J")
+    
+       
+def save_changes():
+   all_contacts_list=[]
+   for contact in all_contacts:
+       all_contacts_list.append(contact.return_dict())
+       
+   filename = 'contacts_info.json'
+   with open(filename, 'w') as f:
+       json.dump( all_contacts_list, f)      
+       
+def load_data():
+   global all_contacts 
+   filename = 'contacts_info.json'
+   with open(filename) as f:#send the loaded input to the converter function and then assign it to the global var
+       json_list=json.load(f)
+       print(json_list)
+       for contact_dict in json_list:
+           # pass
+           all_contacts.append(return_objs(contact_dict))
+       
+       
+       
 
 def add():
    
@@ -40,7 +75,7 @@ def add():
     all_contacts.append(Contact(name, email, phone_numbers))
     
     
-    print(all_contacts[0].name)
+    save_changes()
     
 def edit():
    clear_screen()
@@ -89,6 +124,7 @@ To search by email enter 2\n\
        answer=input("Do you want to edit another value?") 
        if answer == 'N' or answer=='n':
            break
+   save_changes()
            
        
        
@@ -185,18 +221,17 @@ To delete by email enter 2\n\
        pass
    elif confirm == 'Y' or confirm=='y':#delete
        global all_contacts
-       all_contacts=Diff(all_contacts, rows)   
+       all_contacts=Diff(all_contacts, rows) 
+   save_changes()
    
-       
-       
-   
+
 # main
 
-
+load_data()
 run=True
 
 while run:
-    clear_screen()
+   
    
     choice=input(
 "To add a new contact enter 1 \n\
