@@ -1,4 +1,8 @@
 import json
+
+# import call method from subprocess module
+from subprocess import call
+import os
 from rich.console import Console
 from rich.table import Table
 
@@ -21,8 +25,7 @@ class Contact:
       
         return {'name': self.name, 'email': self.email, 'phone_numbers': self.phone_numbers}
    
-   
-   
+
    
 def return_objs(contact_dict):
      
@@ -33,7 +36,7 @@ def return_objs(contact_dict):
 all_contacts=[] #empty at first
 
 def clear_screen():
-    print(chr(27) + "[2J")
+    os.system('cls')
     
        
 def save_changes():
@@ -232,7 +235,7 @@ run=True
 
 while run:
    
-   
+    clear_screen()
     choice=input(
 "To add a new contact enter 1 \n\
 To edit a contact enter 2\n\
