@@ -1,3 +1,4 @@
+from os import system
 from rich.console import Console
 from rich.table import Table
 
@@ -15,10 +16,13 @@ class Contact:
             phone_numbers_string= phone_numbers_string+f'{phone}\n'
         return [self.name, self.email, phone_numbers_string]
 
+#creating the list of objects 
+all_contacts=[] #empty at first
 
 
 
 def add():
+     
     name=input("Enter name: \n")
     email=input("Enter email: \n")
     phone_numbers=[]
@@ -37,9 +41,19 @@ def add():
     
 def edit():
     print("edit")
+ 
+  
+   
+  
+
+   
+ 
+   
+     
     
-def delete():
-    pass
+         
+    
+
 
 def print_table(table, rows):
     columns = ["Name", "Email", "Phone Numbers"]
@@ -70,15 +84,22 @@ def find(seacrh_by, value):
        for contact in all_contacts:
            if value in contact.name :
                
-               rows.append(contact.return_list())
+               rows.append(contact)
    else:      
        for contact in all_contacts:
            if value in contact.email :
                
-               rows.append(contact.return_list())
+               rows.append(contact)
+  
                
    return rows
-    
+   
+def foramt_rows(rows):
+   format_rows=[]
+   for row in rows:
+       format_rows.append(row.return_list())
+   return format_rows
+        
 def search(): 
   
    table = Table(title="Search Result")
@@ -89,20 +110,43 @@ To search by email enter 2\n\
 "))
    value=input("Enter value: \n")
    rows=find(seacrh_by, value)
+   format_rows=foramt_rows(rows)
+  
 
    
-   print_table(table, rows)
-        
+   print_table(table, format_rows)
+
+def Diff(all_contacts, deleted_contacts):
+    new_all_contacts = [contact for contact in all_contacts if contact not in deleted_contacts ]
+    return  new_all_contacts
+   
+def delete():
+   table = Table(title="Search Result")
+  
+   seacrh_by=int(input(
+"To delete by name enter 1 \n\
+To delete by email enter 2\n\
+"))
+   value=input("Enter value: \n")
+   rows=find(seacrh_by, value)
+   format_rows=foramt_rows(rows)
+  
+   print_table(table, format_rows)
+   confirm=input("Do you want to delete this/ these contacts? (Y/N)/n")
+   if confirm == 'N' or confirm=='n':
+       pass
+   elif confirm == 'Y' or confirm=='y':#delete
+       global all_contacts
+       all_contacts=Diff(all_contacts, rows)   
+   
        
-    
-    
+       
+   
+# main
 
-
-
-
+  
 run=True
-#creating the list of objects 
-all_contacts=[] #empty at first
+
 while run:
    
     choice=input(
